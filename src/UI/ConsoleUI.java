@@ -7,7 +7,7 @@
 */
 package UI;
 
-import Data.DataBase;
+//import Data.DataBase;
 import Logic.*;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -52,7 +52,7 @@ abstract class ConsoleUI {
 				break;
 			}
 			case 'h': {
-				System.out.println(showHighScores());
+//				System.out.println(showHighScores());
 				continue;
 			}
 			case 'x': {
@@ -76,23 +76,23 @@ abstract class ConsoleUI {
 	 *
 	 * @return String objekt sa popisom igraca.
 	 */
-	private static String showHighScores() {
-
-		StringBuilder sb = new StringBuilder();
-		Player[] highscores = DataBase.getInstance().readPlayer();
-
-		/*
-		 * Potrebno je sortirati polje. Player implementira Comparable sucelje.
-		 * *
-		 */
-		Arrays.sort(highscores);
-
-		for (int i = 0; i < highscores.length; i++) {
-			Player player = highscores[i];
-			sb.append((i + 1)).append(". ").append(player).append("\n");
-		}
-		return sb.toString();
-	}
+//	private static String showHighScores() {
+//
+//		StringBuilder sb = new StringBuilder();
+//		Player[] highscores = DataBase.getInstance().readPlayer();
+//
+//		/*
+//		 * Potrebno je sortirati polje. Player implementira Comparable sucelje.
+//		 * *
+//		 */
+//		Arrays.sort(highscores);
+//
+//		for (int i = 0; i < highscores.length; i++) {
+//			Player player = highscores[i];
+//			sb.append((i + 1)).append(". ").append(player).append("\n");
+//		}
+//		return sb.toString();
+//	}
 
 	/**
 	 * Metoda koja ispisuje raspolozive Board igre i nudi korisniku odabir jedne
@@ -243,7 +243,7 @@ abstract class ConsoleUI {
 		} else {
 			winner.setScore(winner.getScore() + 1); // povecati score za igraca.
 			if (!(winner instanceof BoardDroid)) {// ako nije droid..
-				DataBase.getInstance().updatePlayer(winner);// osvježi ga u
+//				DataBase.getInstance().updatePlayer(winner);// osvježi ga u
 															// bazi.
 			}
 
@@ -274,12 +274,12 @@ abstract class ConsoleUI {
 			switch (type) {
 			case 'h':
 				BoardPlayer playa = new BoardPlayerFactoryHuman().createPlayer(game, name, mark, 0);
-				Player playerDB = DataBase.getInstance().readPlayer(playa);
-				if (playerDB == null) {
-					DataBase.getInstance().createPlayer(playa);
-				} else {
-					playa.setScore(playerDB.getScore());
-				}
+//				Player playerDB = DataBase.getInstance().readPlayer(playa);
+//				if (playerDB == null) {
+//					DataBase.getInstance().createPlayer(playa);
+//				} else {
+//					playa.setScore(playerDB.getScore());
+//				}
 				return playa;
 
 			case 'd':
@@ -294,5 +294,9 @@ abstract class ConsoleUI {
 	}
 
 	private static void cardGamesUI() {
+	}
+	
+	public static void main(String[] args) {
+		startUI();
 	}
 }

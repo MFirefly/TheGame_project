@@ -1,108 +1,68 @@
 package Logic;
 
-public class BoardGameConnectFour implements BoardGame {
-	
-	private final int BOARD_ROWS = 6;
-	private final int BOARD_COLUMNS = 7;
+/**
+ * The game that is a part of Board-type game. TicTacToe is played on a board of
+ * size 3x3. There are two players that play. Players exchange in setting their
+ * own marks on the board. The first player that sets three own marks
+ * vertically, horizontally or diagonally on the board, wins the game.
+ * 
+ * @author Maja Filakovic
+ * @version 0.1
+ *
+ */
+public class BoardGameTicTacToe implements BoardGame {
+
+	private final int BOARD_ROWS = 3;
+	private final int BOARD_COLUMNS = 3;
 
 	private int playerOnMove;
 	private int[][] board;
-	boolean GameStarted;
+	boolean gameStarted;
 
-	public BoardGameConnectFour(int playerOnMove) {
+	public BoardGameTicTacToe(int playerOnMove) {
 		this.playerOnMove = playerOnMove;
-		board = new int[BOARD_ROWS][BOARD_COLUMNS];
+		this.board = new int[BOARD_ROWS][BOARD_COLUMNS];
 	}
 
 	/**
-	 * Checks if there is a winner of the game.
+	 * Method that checks if there is a winner
 	 * 
-	 * @return true if there is a winner, false otherwise.
+	 * @return true if there is a winner, false otherwise
 	 */
 	private boolean checkIfThereIsAWinner() {
-		// TODO implement method!
-		return false;
-	}
-
-	/**
-	 * Method that checks if position right is free
-	 * 
-	 * @param x
-	 *            - x coordinate of the position
-	 * @param y
-	 *            - y coordinate of the position
-	 * @return true if the position is free, false otherwise
-	 */
-	private boolean checkPositionRight(int x, int y) {
-		// TODO implement method!
+		// TODO Implement method!
 		return true;
 	}
 
 	/**
-	 * Method that checks if position left is free
-	 * 
-	 * @param x
-	 *            - x coordinate of the position
-	 * @param y
-	 *            - y coordinate of the position
-	 * @return true if the position is free, false otherwise
-	 */
-	private boolean checkPositionLeft(int x, int y) {
-		// TODO implement method!
-		return true;
-	}
-
-	/**
-	 * Method that checks if the input move is legal
+	 * Method that check if entered move is legal
 	 * 
 	 * @param move
-	 *            - input move
+	 *            - argument that needs to be checked
 	 * @return true if the move is legal, false otherwise
 	 */
-	private boolean checkLegalMove(int move) {
+	private boolean legalMove(int move) {
 		// TODO implement method!
 		return true;
 	}
 
 	/**
-	 * Method returns first available position in some column
-	 * 
-	 * @param move
-	 *            - receives column ie. move
-	 * @return return first place ie. first row that is available from top
-	 */
-	private int firstAvailable(int move) {
-		// TODO implement method!
-		return 0;
-	}
-
-	/**
-	 * Method that returns mark of the specific position on the board.
+	 * Method that returns mark on specific position on the board
 	 * 
 	 * @param boardPosition
-	 *            - position for which the mark is returned
-	 * @return mark on the boardPosition
+	 *            - position for which the mark is requested
+	 * @return mark on that position
 	 */
-	private char getMark(int boardPosition) {
+	public char getMark(int boardPosition) {
 		// TODO implement method!
 		return ' ';
 	}
 
 	/**
-	 * Method that switches active player
+	 * Method that changes active player.
 	 */
 	private void traverseActivePlayer() {
-		// TODO implement method
-	}
-	
-	/**
-	 * Writes status of the board
-	 * @return formated description of the board
-	 */
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		// TODO implement method!
 	}
 
 	/**
@@ -255,15 +215,15 @@ public class BoardGameConnectFour implements BoardGame {
 	}
 
 	/**
-	 * Represents droid that knows ConnectFour game.
+	 * Represents Tic-Tac-Toe droid.
 	 * 
 	 * @author Maja Filakovic
 	 * @version 0.1
 	 *
 	 */
-	class ConnectFourDroid extends BoardPlayerDroid {
+	public class TicTacToeDroid extends BoardPlayerDroid {
 
-		public ConnectFourDroid(String name, char mark, int score) {
+		public TicTacToeDroid(String name, char mark, int score) {
 			super(name, mark, score);
 		}
 
@@ -272,6 +232,7 @@ public class BoardGameConnectFour implements BoardGame {
 			// TODO Implement method!
 			return 0;
 		}
+
 	}
 
 }
