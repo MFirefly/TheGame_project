@@ -20,19 +20,19 @@ public class BoardPlayerFactoryHuman extends BoardPlayerFactory {
 	 * creates some of the concrete implementations of BoardPlayer class.
 	 * 
 	 * @param game
-	 *            - game object for which BoardPlayer object is created
+	 *            game object for which BoardPlayer object is created
 	 * @param name
-	 *            - player name
+	 *            player name
 	 * @param mark
-	 *            - player mark
+	 *            player mark
 	 * @param score
-	 *            - player score
+	 *            player score
 	 * @return object of concrete BoardPlayer implementation
 	 */
 	@Override
 	public BoardPlayer createPlayer(BoardGame game, String name, char mark, int score) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return new BoardPlayerHuman(name, mark, score);
 	}
 
 }

@@ -164,7 +164,7 @@ abstract class ConsoleUI {
 	private static void playBoardGameUI(int type) {
 
 		BoardGameType bt;
-		/* kreiranje igre i igraca */
+		/* Create game and player. */
 		BoardGame game;
 		switch (type) {
 		case 1: {
@@ -204,7 +204,7 @@ abstract class ConsoleUI {
 			System.out.println(playerNo);
 		} while (playerNo < game.getNumberOfPlayers());
 
-		/* pokretanje igre */
+		/* Starting the game */
 		try {
 			game.startGame();
 		} catch (GameStartedException ex) {
@@ -213,13 +213,13 @@ abstract class ConsoleUI {
 			System.out.println(ex.getMessage());
 		}
 
-		/* ispis dobrodoslice i uputa */
-		System.out.println("Dobrodosli u igru:" + bt);
+		/* Print welcome message and instructions. */
+		System.out.println("Dobrodosli u igru: " + bt);
 		System.out.println(game.getRules());
 
 		System.out.printf("Spremite se i zapamtite pozicije polja.\n%s\n", game.getBoardHelp());
 
-		/* igranje dok god postoje slobodni potezi */
+		/* Play until there are free moves left */
 
 		while (game.hasMovesLeft()) {
 			Player pl = game.getActivePlayer();
@@ -236,7 +236,7 @@ abstract class ConsoleUI {
 			}
 			System.out.println(game);
 		}
-		/* objava rezultata igre i pozdrav */
+		/* Print result of the game and good bye message. */
 		Player winner = game.getWinner();
 		if (winner == null) {
 			System.out.println("A sad boks, jer ste u ovoj igri jednaki.");

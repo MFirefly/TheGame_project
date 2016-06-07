@@ -7,7 +7,7 @@ package Logic;
  * @version 0.1
  *
  */
-public abstract class BoardPlayer extends Player{
+public abstract class BoardPlayer extends Player {
 
 	/**
 	 * Mark that player BoardType uses for the game

@@ -36,7 +36,7 @@ public abstract class Player implements Comparable<Player> {
 	 * Sets attribute name of the player to value name
 	 * 
 	 * @param name
-	 *            - value to set the name attribute
+	 *            value to set the name attribute
 	 */
 	public void setName(String name) {
 		if (name != null) {
@@ -57,7 +57,7 @@ public abstract class Player implements Comparable<Player> {
 	 * Sets attribute score of the player to value score
 	 * 
 	 * @param score
-	 *            - value to set the score attribute
+	 *            value to set the score attribute
 	 */
 	public void setScore(int score) {
 		if (score >= 0) {
@@ -70,7 +70,7 @@ public abstract class Player implements Comparable<Player> {
 	 * implemented so sorting can be easier.
 	 * 
 	 * @param o
-	 *            - object that we compare with
+	 *            object that we compare with
 	 * @return -1, 0 or 1, depending of the result of the comparison
 	 */
 	@Override
@@ -83,7 +83,7 @@ public abstract class Player implements Comparable<Player> {
 	 * type. Players are the same if their names are the same
 	 * 
 	 * @param obj
-	 *            - object that we compare with
+	 *            object that we compare with
 	 * @return true if they are same, false otherwise.
 	 */
 	@Override

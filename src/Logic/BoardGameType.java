@@ -1,7 +1,5 @@
 package Logic;
 
-import java.io.Serializable;
-
 /**
  * Enum that represents all board-type games
  * 

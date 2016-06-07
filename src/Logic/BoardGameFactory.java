@@ -20,11 +20,13 @@ public abstract class BoardGameFactory {
 	 * games.
 	 * 
 	 * @param type
-	 *            - type that represents one of the games
+	 *            type that represents one of the games
 	 * @return reference to an object of the created game
 	 */
 	public static BoardGame createGame(BoardGameType type) {
-		// TODO implement method
+		if(type == BoardGameType.TicTacToe) {
+			return new BoardGameTicTacToe(1);
+		}
 		return null;
 	}
 

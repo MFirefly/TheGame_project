@@ -1,5 +1,7 @@
 package Logic;
 
+import java.util.ArrayList;
+
 public class BoardGameConnectFour implements BoardGame {
 	
 	private final int BOARD_ROWS = 6;
@@ -8,10 +10,12 @@ public class BoardGameConnectFour implements BoardGame {
 	private int playerOnMove;
 	private int[][] board;
 	boolean GameStarted;
+	ArrayList<BoardPlayer> players;
 
 	public BoardGameConnectFour(int playerOnMove) {
 		this.playerOnMove = playerOnMove;
-		board = new int[BOARD_ROWS][BOARD_COLUMNS];
+		this.board = new int[BOARD_ROWS][BOARD_COLUMNS];
+		this.players = new ArrayList<BoardPlayer>();
 	}
 
 	/**

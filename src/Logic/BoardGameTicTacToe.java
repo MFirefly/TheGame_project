@@ -1,5 +1,7 @@
 package Logic;
 
+import java.util.ArrayList;
+
 /**
  * The game that is a part of Board-type game. TicTacToe is played on a board of
  * size 3x3. There are two players that play. Players exchange in setting their
@@ -14,14 +16,25 @@ public class BoardGameTicTacToe implements BoardGame {
 
 	private final int BOARD_ROWS = 3;
 	private final int BOARD_COLUMNS = 3;
+	private final int NUMBER_OF_PLAYERS = 2;
 
 	private int playerOnMove;
 	private int[][] board;
 	boolean gameStarted;
+	private int movesLeft;
+	private int winner;
+	private int numberOfPlayers;
+	ArrayList<BoardPlayer> players;
 
 	public BoardGameTicTacToe(int playerOnMove) {
 		this.playerOnMove = playerOnMove;
 		this.board = new int[BOARD_ROWS][BOARD_COLUMNS];
+		this.players = new ArrayList<BoardPlayer>();
+		this.gameStarted = false;
+		this.movesLeft = BOARD_COLUMNS * BOARD_ROWS;
+		this.playerOnMove = 1;
+		this.winner = 0;
+		this.numberOfPlayers = NUMBER_OF_PLAYERS;
 	}
 
 	/**
@@ -29,55 +42,138 @@ public class BoardGameTicTacToe implements BoardGame {
 	 * 
 	 * @return true if there is a winner, false otherwise
 	 */
-	private boolean checkIfThereIsAWinner() {
-		// TODO Implement method!
-		return true;
+	private boolean checkIfThereIsAWinner(int row, int column) {
+		/* Check column */
+		for (int i = 0; i < BOARD_COLUMNS; i++) {
+			if (board[row][i] != this.playerOnMove) {
+				break;
+			}
+			if (i == this.BOARD_COLUMNS - 1) {
+				this.winner = this.playerOnMove;
+			}
+		}
+
+		/* Check row */
+		for (int i = 0; i < BOARD_ROWS; i++) {
+			if (board[i][column] != this.playerOnMove) {
+				break;
+			}
+			if (i == this.BOARD_ROWS - 1) {
+				this.winner = this.playerOnMove;
+			}
+		}
+
+		/* Check diagonal */
+		if (row == column) {
+			for (int i = 0; i < BOARD_ROWS; i++) {
+				if (board[i][i] != this.playerOnMove) {
+					break;
+				}
+				if (i == this.BOARD_ROWS - 1) {
+					this.winner = this.playerOnMove;
+				}
+			}
+		}
+
+		/* Check anti-diagonal */
+		for (int i = 0; i < BOARD_ROWS; i++) {
+			if (board[i][(BOARD_ROWS - i) - 1] != this.playerOnMove) {
+				break;
+			}
+			if (i == this.BOARD_ROWS - 1) {
+				this.winner = this.playerOnMove;
+			}
+		}
+
+		if (this.winner != 0) {
+			this.movesLeft = 0;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
 	 * Method that check if entered move is legal
 	 * 
 	 * @param move
-	 *            - argument that needs to be checked
+	 *            argument that needs to be checked
 	 * @return true if the move is legal, false otherwise
 	 */
 	private boolean legalMove(int move) {
-		// TODO implement method!
-		return true;
+		if (move >= 1 && move <= 9) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
 	 * Method that returns mark on specific position on the board
 	 * 
 	 * @param boardPosition
-	 *            - position for which the mark is requested
+	 *            position for which the mark is requested
 	 * @return mark on that position
 	 */
 	public char getMark(int boardPosition) {
-		// TODO implement method!
-		return ' ';
+		int row = getRow(boardPosition);
+		int column = getColumn(boardPosition);
+		if (this.board[row][column] == 1) {
+			return ((BoardPlayer)this.getPlayer(1)).getMark();
+		} else if (this.board[row][column] == 2) {
+			return ((BoardPlayer)this.getPlayer(2)).getMark();
+		} else {
+			return '-';
+		}
+
 	}
 
 	/**
 	 * Method that changes active player.
 	 */
 	private void traverseActivePlayer() {
-		// TODO implement method!
+		if (this.playerOnMove == 1) {
+			this.playerOnMove = 2;
+		} else {
+			this.playerOnMove = 1;
+		}
 	}
+	
+	/**
+	 * Method that calculates matrix row number
+	 * @param position that is checked
+	 * @return calculated row value
+	 */
+	private int getRow(int position) {
+		return ((position - 1) / this.BOARD_ROWS);
+	}
+	
+	/**
+	 * Method that calculated matrix column number
+	 * @param position that is checked
+	 * @return calculated column value
+	 */
+	private int getColumn(int position) {
+		return ((position - 1) % this.BOARD_ROWS);
+	}
+	
 
 	/**
 	 * Method that adds player into game. Method returns the number under which
 	 * the player is added or zero if player couldn't have been added to the
-	 * game, ie. if all the players are already added to the game.
+	 * game, i.e. if all the players are already added to the game.
 	 * 
 	 * @param player
-	 *            - player that we are adding to the game
+	 *            player that we are adding to the game
 	 * @return number under which the player is added to the game or zero if all
 	 *         places are filled
 	 */
 	@Override
 	public int addPlayer(BoardPlayer player) {
-		// TODO Auto-generated method stub
+		if (this.players.size() < this.NUMBER_OF_PLAYERS) {
+			this.players.add(player);
+			this.numberOfPlayers--;
+			return this.players.indexOf(player);
+		}
 		return 0;
 	}
 
@@ -88,8 +184,7 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public Player getActivePlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.players.get(this.playerOnMove - 1);
 	}
 
 	/**
@@ -99,20 +194,29 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public String getBoardHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "-------------\n" + "| 1 | 2 | 3 |\n" + "-------------\n" + "| 4 | 5 | 6 |\n" + "-------------\n"
+				+ "| 7 | 8 | 9 |\n" + "-------------";
 	}
 
 	/**
-	 * Method that return current status of the board - occupancy of each field
+	 * Method that returns current status of the board - occupancy of each field
 	 * of the board.
 	 * 
 	 * @return array of Players
 	 */
 	@Override
 	public Player[][] getBoardStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		Player[][] boardStatus = new Player[BOARD_ROWS][BOARD_COLUMNS];
+		for (int i = 0; i < boardStatus.length; i++) {
+			for (int j = 0; j < boardStatus[i].length; j++) {
+				if(this.board[i][j] == 1) {
+					boardStatus[i][j] = this.getPlayer(1);
+				} else if (this.board[i][j] == 2) {
+					boardStatus[i][j] = this.getPlayer(2);
+				}
+			}
+		}
+		return boardStatus;
 	}
 
 	/**
@@ -122,8 +226,7 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public int getNumberOfPlayers() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.numberOfPlayers;
 	}
 
 	/**
@@ -136,8 +239,14 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public Player getPlayer(int playerNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Player player;
+		try {
+			player = this.players.get(playerNo - 1);
+		} catch (IndexOutOfBoundsException ex) {
+			return null;
+		}
+
+		return player;
 	}
 
 	/**
@@ -148,8 +257,11 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public String getRules() {
-		// TODO Auto-generated method stub
-		return null;
+		return "\nThe object of Tic Tac Toe game is to get three in a row.\n"
+				+ "You play on a three by three game board. The first player\n"
+				+ "is known by 'X' and the second is 'O'. Players alternate\n"
+				+ "placing Xs and Os on the game board until either opponent\n"
+				+ "has three in a row or all nine squares are filled.\n";
 	}
 
 	/**
@@ -161,8 +273,17 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public Player getWinner() {
-		// TODO Auto-generated method stub
-		return null;
+		Player player;
+		if (this.winner == 0) {
+			return null;
+		}
+
+		try {
+			player = this.players.get(this.winner - 1);
+		} catch (IndexOutOfBoundsException ex) {
+			return null;
+		}
+		return player;
 	}
 
 	/**
@@ -173,20 +294,37 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public boolean hasMovesLeft() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.movesLeft > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
 	 * Method that does the move on the board.
 	 * 
 	 * @param move
-	 *            - position on which you want to set the move
+	 *            position on which you want to set the move
 	 * @return true if move is successful, false otherwise.
 	 */
 	@Override
 	public boolean placeMove(int move) {
-		// TODO Auto-generated method stub
+		if (this.legalMove(move)) {
+			int row = this.getRow(move);
+			int column = this.getColumn(move);
+			if (this.board[row][column] == 0) {
+				if (this.playerOnMove == 1) {
+					this.board[row][column] = 1;
+				} else {
+					this.board[row][column] = 2;
+				}
+				this.movesLeft--;
+				checkIfThereIsAWinner(row, column);
+				traverseActivePlayer();
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -194,15 +332,19 @@ public class BoardGameTicTacToe implements BoardGame {
 	 * Method that resets the game by setting it in the game begin state. Method
 	 * doesn't check if all players are initialized nor it removes players from
 	 * the game itself. It sets the board game in its beginning state for
-	 * playing and sets the played that starts the game.
+	 * playing and sets the player that starts the game.
 	 * 
 	 * @param playerNo
-	 *            - number of the player that starts the game
+	 *            number of the player that starts the game
 	 */
 	@Override
 	public void resetGame(int playerNo) {
-		// TODO Auto-generated method stub
-
+		this.playerOnMove = playerNo;
+		this.board = new int[BOARD_ROWS][BOARD_COLUMNS];
+		this.gameStarted = false;
+		this.movesLeft = BOARD_COLUMNS * BOARD_ROWS;
+		this.playerOnMove = 1;
+		this.winner = 0;
 	}
 
 	/**
@@ -210,8 +352,20 @@ public class BoardGameTicTacToe implements BoardGame {
 	 */
 	@Override
 	public void startGame() {
-		// TODO Auto-generated method stub
+		this.gameStarted = true;
+	}
+	
+	
 
+	@Override
+	public String toString() {
+		return "\n-------------\n" 
+			+ "| " + this.getMark(1) + " | " + this.getMark(2) + " | " + this.getMark(3) + " |\n"
+			+ "-------------\n" 
+			+ "| " + this.getMark(4) + " | " + this.getMark(5) + " | " + this.getMark(6) + " |\n" 
+			+ "-------------\n"
+			+ "| " + this.getMark(7) + " | " + this.getMark(8) + " | " + this.getMark(9) + " |\n" 
+			+ "-------------\n";
 	}
 
 	/**
